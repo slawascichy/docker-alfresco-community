@@ -1,0 +1,14 @@
+
+DISTRIB_NAM="rockylinux"
+DISTRIB_MAJOR="9"
+IMAGE_BASE_LOCATION="docker.io/library/rockylinux:9"
+JDIST="jre"
+JAVA_MAJOR="17"
+
+docker build -f Dockerfile \
+ --build-arg DISTRIB_NAM="rockylinux" \
+ --build-arg DISTRIB_MAJOR="9" \
+ --build-arg IMAGE_BASE_LOCATION="docker.io/library/rockylinux:9" \
+ --build-arg JDIST="jre" \
+ --build-arg JAVA_MAJOR="17" \
+ -t scisoftware/alfresco-java:rocky-9-17 .

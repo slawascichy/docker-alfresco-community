@@ -1,0 +1,37 @@
+name: postgres-alone
+
+networks:
+  default-network:
+    driver: bridge
+
+volumes:
+  postgresql-data:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /d/mercury/alfresco/postgresql-data
+
+services:
+################################################
+# The component is using external PostgreSQL Database 
+# So, this definition of component is commented
+################################################
+  postgres:
+    image: postgres:14.4
+    mem_limit: 512m
+    environment:
+      - POSTGRES_PASSWORD=alfresco
+      - POSTGRES_USER=alfresco
+      - POSTGRES_DB=alfresco
+    command: postgres -c max_connections=300 -c log_min_messages=LOG
+    ports:
+      - "15432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $$POSTGRES_DB -U $$POSTGRES_USER"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    volumes:
+      - postgresql-data:/var/lib/postgresql/data:rw

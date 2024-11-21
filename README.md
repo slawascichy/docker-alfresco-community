@@ -16,6 +16,6 @@ Open your browser and check everything starts up correctly:
 | --- | ----------- |
 | Administration and REST APIs |	http://localhost:8080/alfresco |
 | Share |	http://localhost:8080/share |
-| Digital Workspace |	http://localhost:8080/workspace |
+| traefik proxy dashboard |	http://localhost:8888/dashboard/#/ |
 | Search Services administration (see this [page](https://docs.alfresco.com/content-services/latest/install/containers/docker-compose/#search-services-administration) for info on how to login) |	http://localhost:8083/solr |
-| Transform Router configuration  |	http://localhost:8095/transform/config |
+| Transform Router configuration  |	http://localhost:8090/transform/config |

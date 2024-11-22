@@ -2,7 +2,7 @@
 
 
 A docker compilation that allows you to run an Alfresco document repository 
-with an external PostgreSQL database instance and an external Apache ActiveMQ instance.
+with an external PostgreSQL database and Apache ActiveMQ instances.
 
 Starting of docker compose:
 

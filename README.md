@@ -1,8 +1,6 @@
 # docker-alfresco-community
 
-
-A docker compilation that allows you to run an Alfresco document repository 
-with an external PostgreSQL database and Apache ActiveMQ instances.
+A docker composition that allows you to run an Alfresco document repository with external instances of PostgreSQL database and Apache ActiveMQ .
 
 Starting of docker compose:
 

@@ -3,7 +3,8 @@
 We need to work with external PostgreSQL in version 13.
 We should replace new JDBC driver older version 42.3.2.
 
-To download required version od JDBC driver:
+The best repository with required libraries is Maven2 Repository. 
+To download required version of JDBC driver you can use followed links:
 
  - [postgresql-42.3.2.jar](https://repo1.maven.org/maven2/org/postgresql/postgresql/42.3.2/postgresql-42.3.2.jar)
 
@@ -26,6 +27,16 @@ To download required version od JDBC driver:
     <version>42.7.3</version>
 </dependency>
 ```
+
+## Additional volumes declared in image
+
+In image was declared three volumes (see [Dockerfile](Dockerfile)):
+
+| Localization | Description |
+| ---- | -------------- |
+| /usr/local/tomcat/alf_data | Data of document repository, document files stored in the repository. |
+| /usr/local/tomcat/logs | Logged events files. |
+| /usr/local/tomcat/lib | Folder with libraries, used globally by Apache Tomcat server. This is target folder where JDBC driver' is stored. |
 
 ## Build image command
 

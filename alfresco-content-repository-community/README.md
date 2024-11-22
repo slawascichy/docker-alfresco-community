@@ -1,7 +1,7 @@
 # alfresco-content-repository-community
 
 We need to work with external PostgreSQL in version 13.
-We should replace new JDBC driver older version 42.3.2.
+We should replace current (newer) JDBC driver with older version: 42.3.2.
 
 The best repository with required libraries is Maven2 Repository. 
 To download required version of JDBC driver you can use followed links:

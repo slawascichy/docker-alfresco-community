@@ -59,7 +59,7 @@ See also [Configure->Overview->Using alfresco-global.properties](https://docs.al
 
 ### PostgreSQL database connection definition
 
-Connection definition to external PostgreSQl database.
+Connection definition to external PostgreSQL database.
 
 | Variable | Description |
 | --- | ----------- |

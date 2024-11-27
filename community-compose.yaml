@@ -112,10 +112,10 @@ services:
         -Dshare.port=${SHARE_PORT:-8080}
         -Dshare.protocol=${SHARE_PROTOCOL:-http}
         -Dshare.context=${SHARE_CONTEXT:-share}
-        -Dalfresco.host=${SHARE_HOST:-localhost}
-        -Dalfresco.port=${SHARE_PORT:-8080}
-        -Dalfresco.protocol=${SHARE_PROTOCOL:-http}
-        -Dalfresco.context=${SHARE_CONTEXT:-alfresco}
+        -Dalfresco.host=${ALFRESCO_HOST:-localhost}
+        -Dalfresco.port=${ALFRESCO_PORT:-8080}
+        -Dalfresco.protocol=${ALFRESCO_PROTOCOL:-http}
+        -Dalfresco.context=${ALFRESCO_CONTEXT:-alfresco}
         -Dcsrf.filter.enabled=${CSRF_FILTER_ENABLED:-false}
         -Dcsrf.filter.referer="${CSRF_FILTER_REFERER:-}"
         -Dcsrf.filter.referer.always=${CSRF_FILTER_REFERER_ALWAYS:-false}

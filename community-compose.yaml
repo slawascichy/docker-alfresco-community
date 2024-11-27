@@ -174,7 +174,7 @@ services:
     hostname: alfresco-share
     environment:
       CSRF_FILTER_ORIGIN: ${CSRF_FILTER_ORIGIN:-http://localhost:8080}
-      CSRF_FILTER_REFERER: ${CSRF_FILTER_ORIGIN:-http://localhost:8080/share/.*}
+      CSRF_FILTER_REFERER: ${CSRF_FILTER_REFERER:-http://localhost:8080/share/.*}
       REPO_HOST: "alfresco"
       REPO_PORT: "8080"
       JAVA_OPTS: >-

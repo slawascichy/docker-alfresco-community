@@ -74,7 +74,7 @@ Between the 'content' and 'search' services, communication is performed to updat
 
 | Variable | Description |
 | --- | ----------- |
-| SORL_SHARED_SECRET | Token value, default is `'secret`. |
+| SORL_SHARED_SECRET | Token value, default is `secret`. |
 
 
 ### Apache ActiveMQ connection definition

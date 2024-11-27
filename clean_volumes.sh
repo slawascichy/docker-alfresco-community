@@ -1,13 +1,13 @@
 #!/bin/bash
 
-export BASE_DIR=/cygdrive
+export VOLUME_BASE_DIR=/cygdrive/d/mercury/alfresco
 
-rm -rf $BASE_DIR/d/mercury/alfresco/tomcat/lib/*
-rm -rf $BASE_DIR/d/mercury/alfresco/tomcat/alf_data/*
-rm -rf $BASE_DIR/d/mercury/alfresco/tomcat/logs/*
-rm -rf $BASE_DIR/d/mercury/alfresco/activemq/conf/*
-rm -rf $BASE_DIR/d/mercury/alfresco/activemq/data/*
-rm -rf $BASE_DIR/d/mercury/alfresco/activemq/logs/*
-rm -rf $BASE_DIR/d/mercury/alfresco/search-services/keystores/*
-rm -rf $BASE_DIR/d/mercury/alfresco/search-services/data/*
-rm -rf $BASE_DIR/d/mercury/alfresco/search-services/solrhome/*
+rm -rf $VOLUME_BASE_DIR/tomcat/lib/*
+rm -rf $VOLUME_BASE_DIR/tomcat/alf_data/*
+rm -rf $VOLUME_BASE_DIR/tomcat/logs/*
+rm -rf $VOLUME_BASE_DIR/activemq/conf/*
+rm -rf $VOLUME_BASE_DIR/activemq/data/*
+rm -rf $VOLUME_BASE_DIR/activemq/logs/*
+rm -rf $VOLUME_BASE_DIR/search-services/keystores/*
+rm -rf $VOLUME_BASE_DIR/search-services/data/*
+rm -rf $VOLUME_BASE_DIR/search-services/solrhome/*

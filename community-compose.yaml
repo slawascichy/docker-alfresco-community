@@ -17,19 +17,19 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device: /d/mercury/alfresco/tomcat/lib
+      device: ${VOLUME_BASE_DIR}/tomcat/lib
   alfresco-tomcat-alf-data:
     driver: local
     driver_opts:
       o: bind
       type: none
-      device: /d/mercury/alfresco/tomcat/alf_data
+      device: ${VOLUME_BASE_DIR}/tomcat/alf_data
   alfresco-tomcat-logs:
     driver: local
     driver_opts:
       o: bind
       type: none
-      device: /d/mercury/alfresco/tomcat/logs
+      device: ${VOLUME_BASE_DIR}/tomcat/logs
 ################################################
 # The component is using external PostgreSQL Database 
 # So, this definition of component is commented
@@ -39,7 +39,7 @@ volumes:
 #    driver_opts:
 #      o: bind
 #      type: none
-#      device: /d/mercury/alfresco/postgresql-data
+#      device: ${VOLUME_BASE_DIR}/postgresql-data
 ################################################
 # The component is using external Apache ActiveMQ 
 # So, this definition of component is commented
@@ -49,42 +49,43 @@ volumes:
 #    driver_opts:
 #      o: bind
 #      type: none
-#      device: /d/mercury/alfresco/activemq/conf
+#      device: ${VOLUME_BASE_DIR}/activemq/conf
 #  activemq-data:
 #    driver: local
 #    driver_opts:
 #      o: bind
 #      type: none
-#      device: /d/mercury/alfresco/activemq/data
+#      device: ${VOLUME_BASE_DIR}/activemq/data
 #  activemq-logs:
 #    driver: local
 #    driver_opts:
 #      o: bind
 #      type: none
-#      device: /d/mercury/alfresco/activemq/logs
+#      device: ${VOLUME_BASE_DIR}/activemq/logs
   search-services-keystores:
     driver: local
     driver_opts:
       o: bind
       type: none
-      device: /d/mercury/alfresco/search-services/keystores
+      device: ${VOLUME_BASE_DIR}/search-services/keystores
   search-services-data:
     driver: local
     driver_opts:
       o: bind
       type: none
-      device: /d/mercury/alfresco/search-services/data
+      device: ${VOLUME_BASE_DIR}/search-services/data
   search-services-solrhome:
     driver: local
     driver_opts:
       o: bind
       type: none
-      device: /d/mercury/alfresco/search-services/solrhome
+      device: ${VOLUME_BASE_DIR}/search-services/solrhome
 
 services:
   alfresco:
     image: scisoftware/alfresco-content-repository-community:23.3.0
     mem_limit: 1900m
+    hostname: alfresco-content
     environment:
       JAVA_TOOL_OPTIONS: >-
         -Dencryption.keystore.type=JCEKS
@@ -107,11 +108,19 @@ services:
         -Dsolr.sharedSecret=${SORL_SHARED_SECRET}
         -Dsolr.base.url=/solr
         -Dindex.subsystem.name=solr6
-        -Dshare.host=127.0.0.1
-        -Dshare.port=8080
-        -Dalfresco.host=localhost
-        -Dalfresco.port=8080
-        -Dcsrf.filter.enabled=false
+        -Dshare.host=${SHARE_HOST:-127.0.0.1}
+        -Dshare.port=${SHARE_PORT:-8080}
+        -Dshare.protocol=${SHARE_PROTOCOL:-http}
+        -Dshare.context=${SHARE_CONTEXT:-share}
+        -Dalfresco.host=${SHARE_HOST:-localhost}
+        -Dalfresco.port=${SHARE_PORT:-8080}
+        -Dalfresco.protocol=${SHARE_PROTOCOL:-http}
+        -Dalfresco.context=${SHARE_CONTEXT:-alfresco}
+        -Dcsrf.filter.enabled=${CSRF_FILTER_ENABLED:-false}
+        -Dcsrf.filter.referer="${CSRF_FILTER_REFERER:-}"
+        -Dcsrf.filter.referer.always=${CSRF_FILTER_REFERER_ALWAYS:-false}
+        -Dcsrf.filter.origin="${CSRF_FILTER_ORIGIN:-}"
+        -Dcsrf.filter.origin.always=${CSRF_FILTER_ORIGIN_ALWAYS:-false}
         -Daos.baseUrlOverwrite=http://localhost:8080/alfresco/aos
         -Dmessaging.broker.url="${ACTIVEMQ_URL}?timeout=3000&jms.useCompression=true"
         -Ddeployment.method=DOCKER_COMPOSE
@@ -132,12 +141,13 @@ services:
       - "traefik.http.middlewares.acsfakeauth.basicauth.users=fake:"
       - "traefik.http.routers.solrapideny.middlewares=acsfakeauth@docker"
     volumes:
-      - alfresco-tomcat-lib:/usr/local/tomcat/lib:rw	  
+      - alfresco-tomcat-lib:/usr/local/tomcat/lib:rw  
       - alfresco-tomcat-alf-data:/usr/local/tomcat/alf_data:rw
-      - alfresco-tomcat-logs:/usr/local/tomcat/logs:rw	  
+      - alfresco-tomcat-logs:/usr/local/tomcat/logs:rw
   transform-core-aio:
     image: alfresco/alfresco-transform-core-aio:5.1.4
     mem_limit: 1536m
+    hostname: transform-core-aio
     environment:
       JAVA_OPTS: >-
         -XX:MinRAMPercentage=50
@@ -161,9 +171,10 @@ services:
   share:
     image: docker.io/alfresco/alfresco-share:23.3.2
     mem_limit: 1g
+    hostname: alfresco-share
     environment:
-      CSRF_FILTER_ORIGIN: http://localhost:8080
-      CSRF_FILTER_REFERER: http://localhost:8080/share/.*
+      CSRF_FILTER_ORIGIN: ${CSRF_FILTER_ORIGIN:-http://localhost:8080}
+      CSRF_FILTER_REFERER: ${CSRF_FILTER_ORIGIN:-http://localhost:8080/share/.*}
       REPO_HOST: "alfresco"
       REPO_PORT: "8080"
       JAVA_OPTS: >-
@@ -196,6 +207,7 @@ services:
 #  postgres:
 #    image: postgres:14.4
 #    mem_limit: 512m
+#    hostname: postgres
 #    environment:
 #      - POSTGRES_PASSWORD=alfresco
 #      - POSTGRES_USER=alfresco
@@ -214,6 +226,7 @@ services:
   solr6:
     image: docker.io/alfresco/alfresco-search-services:2.0.12
     mem_limit: 2g
+    hostname: solr6
     environment:
       # Solr needs to know how to register itself with Alfresco
       SOLR_ALFRESCO_HOST: "alfresco"
@@ -241,6 +254,7 @@ services:
 #  activemq:
 #    image: alfresco/alfresco-activemq:5.18-jre17-rockylinux8
 #    mem_limit: 1g
+#    hostname: activemq
 #    ports:
 #      - "8161:8161" # Web Console
 #      - "5672:5672" # AMQP
@@ -259,6 +273,7 @@ services:
   content-app:
     image: alfresco/alfresco-content-app:5.1.1
     mem_limit: 128m
+    hostname: content-app
     environment:
       APP_BASE_SHARE_URL: "http://localhost:8080/aca/#/preview/s"
     healthcheck:
@@ -278,6 +293,7 @@ services:
   control-center:
     image: quay.io/alfresco/alfresco-control-center:9.1.0
     mem_limit: 128m
+    hostname: control-center
     environment:
       APP_CONFIG_PROVIDER: "ECM"
       APP_CONFIG_AUTH_TYPE: "BASIC"
@@ -299,6 +315,7 @@ services:
   proxy:
     image: traefik:3.1
     mem_limit: 128m
+    hostname: traefik-proxy
     command:
       - "--api.insecure=true"
       - "--providers.docker=true"

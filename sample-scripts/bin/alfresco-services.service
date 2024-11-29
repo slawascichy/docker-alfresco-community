@@ -1,0 +1,16 @@
+[Unit]
+Description=Alfresco Content Repository
+After=docker.service
+
+[Service]
+User=root
+Group=root
+WorkingDirectory=/home/alfresco/workspace/docker-alfresco-community
+Environment="PATH=$PATH:/home/alfresco/workspace/bin"
+ExecStart=/home/alfresco/workspace/bin/start-stop-service.sh start
+ExecStop=/home/alfresco/workspace/bin/start-stop-service.sh stop
+ExecReload=/home/alfresco/workspace/bin/start-stop-service.sh restart
+RestartSec=5
+
+[Install]
+WantedBy=default.target

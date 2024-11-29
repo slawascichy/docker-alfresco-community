@@ -35,20 +35,24 @@ restart()
     docker compose -f ${COMPOSE_FILE} --env-file ${ENV_FILE} restart
 }
 
+export MYUID=`id -u`
+if [ "$MYUID" -ne 0 ]; then echo "Please run this script as root or using sudo!"; exit 1; fi
 
 case "$1" in
-        start)
-                start
-                ;;
-        stop)
-                stop
-                ;;
-        status)
-                status
-                ;;
-        restart)
-                restart
-                ;;
-        *)
-                echo "Usage: $0 {start|stop|restart|status}"
+    start)
+            start
+            ;;
+    stop)
+            stop
+            ;;
+    status)
+            status
+            ;;
+    restart)
+            restart
+            ;;
+    *)
+            echo "Usage: $0 {start|stop|restart|status}"
 esac
+
+exit 0

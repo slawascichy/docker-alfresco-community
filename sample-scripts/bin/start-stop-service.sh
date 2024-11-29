@@ -24,7 +24,7 @@ stop()
 
 status()
 {
-    docker container ls --format "table {{.Names}}\t{{.ID}}\t{{.Status}}" | grep "${COMPOSE_NAME}\|CONTAINER ID"
+    docker container ls -a --format "table {{.Names}}\t{{.ID}}\t{{.Status}}" | grep "${COMPOSE_NAME}\|CONTAINER ID"
     echo -e "\n To connect the container use command:"
     echo " > docker exec -it <CONTAINER_ID> bash"
 }

@@ -2,6 +2,15 @@
 
 A docker composition that allows you to run an Alfresco document repository with external instances of PostgreSQL database and Apache ActiveMQ .
 
+## Before you begin
+
+> [!IMPORTANT]
+> Before you begin, first build an image with the Alfresco Content. `Dockerfile` is stored in folder `alfresco-content-repository-community`.
+> For more please read [alfresco-content-repository-community/README.md](alfresco-content-repository-community/README.md).
+
+
+## Starting the compose
+
 Starting of docker compose:
 
 ```bash

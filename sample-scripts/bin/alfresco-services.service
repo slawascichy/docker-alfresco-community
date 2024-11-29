@@ -1,16 +1,16 @@
 [Unit]
 Description=Alfresco Content Repository
 After=docker.service
+Wants=network-online.target docker.socket
+Requires=docker.socket
 
 [Service]
+Type=simple
 User=root
 Group=root
 WorkingDirectory=/home/alfresco/workspace/docker-alfresco-community
-Environment="PATH=$PATH:/home/alfresco/workspace/bin"
+Environment="PATH=/root/.local/bin:/root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin"
 ExecStart=/home/alfresco/workspace/bin/start-stop-service.sh start
-ExecStop=/home/alfresco/workspace/bin/start-stop-service.sh stop
-ExecReload=/home/alfresco/workspace/bin/start-stop-service.sh restart
-RestartSec=5
 
 [Install]
-WantedBy=default.target
+WantedBy=multi-user.target

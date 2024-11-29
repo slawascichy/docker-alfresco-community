@@ -22,7 +22,6 @@ stop()
     docker compose -f ${COMPOSE_FILE} --env-file ${ENV_FILE} stop
 }
 
-
 status()
 {
     docker container ls --format "table {{.Names}}\t{{.ID}}\t{{.Status}}" | grep "${COMPOSE_NAME}\|CONTAINER ID"
